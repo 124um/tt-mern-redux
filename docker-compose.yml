@@ -1,0 +1,16 @@
+version: '3'
+services: 
+  database:
+    image: 'mongo'
+    restart: always
+    container_name: 'books-mongo-container'
+    environment: 
+      - MOGO_INITDB_DATABASE=LIBRARY
+      - MONGO_INITDB_ROOT_USERNAME=librarian
+      - MONGO_INITDB_ROOT_PASSWORD=libpassword 
+      - MONGODB_USER="librarian" 
+      - MONGODB_PASS="libpassword"
+    volumes:
+      - ./data/db:/data/db
+    ports:
+      - 27017:27017

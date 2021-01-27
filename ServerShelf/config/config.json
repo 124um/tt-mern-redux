@@ -1,0 +1,3 @@
+{
+    "DBCONNECT" : "mongodb://librarian:libpassword@localhost:27017/LIBRARY"
+}

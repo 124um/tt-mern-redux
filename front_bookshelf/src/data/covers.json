@@ -1,0 +1,23 @@
+[
+    {
+        "id" : 1,
+        "url" : "url to cover 5 book"
+    },
+    {
+        "id" : 2,
+        "url" : "url to cover  4 book"
+    },
+    {
+        "id" : 3,
+        "url" : "url to cover  3 book"
+    },
+    {
+        "id" : 4,
+        "url" : "url to cover  3 book"
+    },
+    {
+        "id" : 5,
+        "url" : "url to cover 1 book"
+    }
+
+]
