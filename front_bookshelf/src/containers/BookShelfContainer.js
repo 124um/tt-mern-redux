@@ -2,10 +2,12 @@ import React from 'react';
 import { connect } from 'react-redux'
 // import booksTestData from "../data/books.json"
 // import coverTestData from "../data/covers.json"
-import { Badge } from 'reactstrap';
+import { Badge, Row, Button } from 'reactstrap';
 import BooksList from "./ShelfComponents/BooksList"
 import BookDetail from "./ShelfComponents/BookDetail"
 import { fetchBooks, fetchCovers } from "../actions/actions";
+import Alert from "../components/Alerts"
+import ModalOperations from "../components/ModalOperations"
 
 class BookShelfContainer extends React.Component {
 
@@ -14,6 +16,11 @@ class BookShelfContainer extends React.Component {
         currentCover: {},
         booksData : [],
         coversData: [],
+        modalOperationsVisible: false,
+        modalOperationsType: "",
+        alert: { alertText: "", alertColor: "" },
+        alertVisible: false,
+        disabledButton: true
     }
 
     componentDidMount() {
@@ -33,22 +40,92 @@ class BookShelfContainer extends React.Component {
         })
     }
 
+    postNewBook = (newInfo) => {
+    console.log("BookShelfContainer ~ newInfo", newInfo)
+        // this.workWithAlert(
+        //     true,
+        //     "Book added to the shelf!",
+        //     "success"
+        // )
+    }
+
+    pathBook = (newInfo) => {
+    console.log("BookShelfContainer ~ newInfo", newInfo)
+
+    }
+    
+    deleteBook = (id) => {
+    console.log("BookShelfContainer ~ deleteBook ~ id", id)
+
+    }
+
     handleClick = async (currentBookId) => {
-        console.log("BookShelfContainer ~ handleClick= ~ currentBookId", currentBookId)
         await this.setBook(currentBookId)
         await this.setCover(this.state.currentBook.coverId)
+        if(currentBookId){
+            this.setState({ disabledButton: false})
+        }
+    }
+
+    handleClickButton = (type) => {
+        this.setState({
+            modalOperationsType: type,
+            modalOperationsVisible: true
+        })
+    }
+
+    submitInModal = (type, newInfo) => {
+        switch(type) {
+            case "new": this.postNewBook(newInfo)
+                break   
+            case "edit": this.pathBook(newInfo)
+                break  
+            case "remove": this.deleteBook(newInfo)
+                break  
+        }
+    }
+
+    workWithAlert = (alertVisible, alertText, alertColor) => {
+        this.setState({
+            alertVisible: alertVisible,
+            alert: {
+                alertText: alertText,
+                alertColor: alertColor,
+            },
+        })
     }
 
     render(){
-        const {currentBook, currentCover} = this.state
-        const {books, covers} = this.props
+        const {currentBook, currentCover, alertVisible, modalOperationsVisible, modalOperationsType, disabledButton, alert} = this.state
+        const {books , covers} = this.props
         
         return(
-            <div style={{margin: 50}}>
-                <h1 style={{marginBottom: 50}}><Badge color="warning">This is books shelf!</Badge></h1>
-                <BooksList bookListData={books.res} onSelect={this.handleClick} />
-                <BookDetail bookInfo={currentBook} cover={currentCover} />
-            </div>
+            <>
+                <Alert
+                    alertVisible={alertVisible}
+                    alertText={alert.alertText}
+                    alertColor={alert.alertColor}
+                    toggle={(id) => this.setState({ [id]: ![id] })}
+                />
+                <ModalOperations
+                    isOpen={modalOperationsVisible}
+                    toggle={(id) => this.setState({ [id]: ![id] })}
+                    modalOperationsType={modalOperationsType}
+                    bookInfo={currentBook}
+                    currentCover={currentCover}
+                    onApply={this.submitInModal}
+                />
+                <div style={{margin: 50}}>
+                    <Row style={{marginBottom: 50, marginLeft: 0}}>
+                        <h1><Badge color="warning">This is books shelf!</Badge></h1>
+                        <Button onClick={() => this.handleClickButton("new")} style={styleButton} color="primary" outline >Add New book +</Button>
+                        <Button disabled={disabledButton} onClick={() => this.handleClickButton("edit")} style={styleButton} color="primary" outline >Edit book</Button>
+                        <Button disabled={disabledButton} onClick={() => this.handleClickButton("remove")} style={styleButton} color="primary" outline >Remove book</Button>
+                    </Row>
+                    <BooksList bookListData={books.res} coversData={covers.res} onSelect={this.handleClick} />
+                    <BookDetail bookInfo={currentBook} cover={currentCover} />
+                </div>
+            </>
         )
     }
 }
@@ -68,3 +145,9 @@ const mapDispatchToProps = dispatch => {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(BookShelfContainer)
+
+const styleButton = {
+    marginLeft: 20, 
+    marginTop: 6, 
+    height: 45 
+}
