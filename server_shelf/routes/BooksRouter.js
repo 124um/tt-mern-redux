@@ -17,7 +17,7 @@ exports.getBooks = async (req, res) => {
 
 exports.getBook = async (req, res) => {
     try {
-        const results = await getBookData(req.body.id);
+        const results = await getBookData(req.body);
         res.send({
             "code": 200, "success": "success  getBookData", results
         });
@@ -62,8 +62,6 @@ exports.patchBook = async (req, res) => {
 
 exports.deleteBook = async (req, res) => {
     try {
-        
-        console.log("exports.deleteBook ~ req-----------------", req.body)
         const results = await deleteBookData(req.body);
         res.send({
             "code": 200, "success": "success  deleteBookData", results
@@ -94,7 +92,7 @@ exports.getCovers = async (req, res) => {
 
 exports.getCover = async (req, res) => {
     try {
-        const results = await getCoverData(res.body.id);
+        const results = await getCoverData(res.body);
         res.send({
             "code": 200, "success": "success getCoverData", results
         });
@@ -139,7 +137,7 @@ exports.patchCover = async (req, res) => {
 
 exports.deleteCovers = async (req, res) => {
     try {
-        const results = await deleteCoverData(res.body.id);
+        const results = await deleteCoverData(res.body);
         res.send({
             "code": 200, "success": "success deleteCoverData", results
         });

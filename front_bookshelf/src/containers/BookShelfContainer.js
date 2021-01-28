@@ -29,6 +29,10 @@ class BookShelfContainer extends React.Component {
     }
 
     componentDidMount() {
+        this.fetchAll()
+    }
+
+    fetchAll = () => {
         this.props.fetchBooks()
         this.props.fetchCovers()
     }
@@ -47,9 +51,10 @@ class BookShelfContainer extends React.Component {
 
     postNewBook = (newInfo) => {
         const req = {
+            id: this.props.books.res.length + 1,
             title: newInfo.title,
             description : newInfo.description,
-            coverId : 1  // Strubbs
+            coverId : 1  // Stub
         }      
         this.props.postBook(req)
         this.workWithAlert(
@@ -58,11 +63,12 @@ class BookShelfContainer extends React.Component {
             "success"
         )
         this.setState({ modalOperationsVisible: false })
+        this.fetchAll()
     }
 
     patchBook = (newInfo) => {
         const req = {
-            id: this.state.currentBook.id,
+            id: this.state.currentBook._id,
             title: newInfo.title == undefined ? this.state.currentBook.title : newInfo.title,
             description : newInfo.description == undefined ? this.state.currentBook.description : newInfo.description,
             coverId : newInfo.coverId == undefined ? this.state.currentBook.coverId : newInfo.coverId
@@ -77,13 +83,14 @@ class BookShelfContainer extends React.Component {
     }
     
     deleteBook = () => {
-        this.props.deleteBook(this.state.currentBook.id)
+        this.props.deleteBook({ _id: this.state.currentBook._id})
         this.workWithAlert(
             true,
             "Book deleted to the shelf - success!",
             "success"
         )
         this.setState({ modalOperationsVisible: false })
+        this.fetchAll()
     }
 
     handleClick = async (currentBookId) => {

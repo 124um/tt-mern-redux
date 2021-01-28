@@ -1,39 +1,30 @@
 const mongoose = require('mongoose');
-
-// const connect = require("../connect")
-
-const booksTestData = require( '../data/books.json')
-const coversTestData = require( '../data/covers.json')
-
 const Book = require("../models/book")
 const Cover = require("../models/cover")
+const { DBCONNECT } = require("../config/config.json")
 
-mongoose.connect("mongodb://librarian:libpassword@localhost:27017/LIBRARY?authSource=admin&readPreference=primary", { useUnifiedTopology: true, useNewUrlParser: true, useFindAndModify: false }, function(err){
+mongoose.connect( DBCONNECT, { useUnifiedTopology: true, useNewUrlParser: true, useFindAndModify: false }, function(err){
         if(err) return console.log(err);
 });
 
-
 exports.getBooksData = async () => {
-    const books = Book.find({})
-    return books
+    return Book.find({})
 };
 
 exports.getBookData = async ( bookId ) => {
-    return Book.findById( bookId );
+    return Book.findById({ _id: bookId._id });
 };
 
 exports.postBookData = async (newData) => {
-    const book = Book.create({ title : newData.title , description : newData. description, coverId: newData.coverId });
-    return book.save();
+    return Book.create({ id: newData.id, title : newData.title , description : newData. description, coverId: newData.coverId });
 };
 
 exports.patchBookData = async (newData) => {
-    const book = Book.findByIdAndUpdate( newData.id, { title : newData.title , description : newData. description, coverId: newData.coverId });
-    return book.save();
+    return Book.findById( newData.id ).updateOne( { title : newData.title , description : newData.description, coverId: newData.coverId });
 };
 
 exports.deleteBookData = async (bookId) => {
-    return Book.deleteOne({ id : bookId })
+    return Book.deleteOne({ _id: bookId._id })
 };
 
 exports.getCoversData = async () => { 
@@ -41,19 +32,17 @@ exports.getCoversData = async () => {
 };
 
 exports.getCoverData = async (coverId) => {
-    return Cover.findById( coverId );
+    return Cover.findById({  _id: coverId._id });
 };
 
 exports.postCoverData = async (newData) => {
-    const cover = Cover.create({ name: newData.name });
-    return cover.save();    
+    return Cover.create({ name: newData.name });
 };
 
 exports.patchCoverData = async (newData) => {
-    const cover = Cover.findByIdAndUpdate(newData.id, { name: newData.name });
-    return cover.save();
+    return Cover.findByIdAndUpdate(newData.id, { name: newData.name });
 }; 
 
 exports.deleteCoverData = async (coverId) => {
-    return Cover.deleteOne({ id : coverId })
+    return Cover.deleteOne({ _id : coverId._id })
 };  
