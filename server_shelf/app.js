@@ -27,11 +27,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/static', express.static('public'));
 app.use('/api', router);
 
-
-app.use('/books', booksRouter.getBooks);
-app.use('/books/:id', booksRouter.getBook);
-app.use('/covers', booksRouter.getCovers);
-
 router.use((req, res, next) => {
     return next()
 }) 

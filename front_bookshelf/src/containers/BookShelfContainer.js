@@ -5,7 +5,12 @@ import { connect } from 'react-redux'
 import { Badge, Row, Button } from 'reactstrap';
 import BooksList from "./ShelfComponents/BooksList"
 import BookDetail from "./ShelfComponents/BookDetail"
-import { fetchBooks, postBook, patchBook, deleteBook, fetchCovers } from "../actions/actions";
+import { 
+    fetchBooks, 
+    postBook, 
+    patchBook, 
+    deleteBook, 
+    fetchCovers } from "../actions/actions";
 import Alert from "../components/Alerts"
 import ModalOperations from "../components/ModalOperations"
 

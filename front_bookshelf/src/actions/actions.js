@@ -54,7 +54,7 @@ export const postBooksFailure = (error) => {
     }
 }
 
-export const postBooks = () => {
+export const postBook = (data) => {
     return dispatch => {
         dispatch(postBooksLoading())
         jsonApi(`books/`, "POST", data)
@@ -87,7 +87,7 @@ export const patchBooksFailure = (error) => {
     }
 }
 
-export const patchBooks = () => {
+export const patchBook = (data) => {
     return dispatch => {
         dispatch(patchBooksLoading())
         jsonApi(`books/`, "PATCH", data)
@@ -120,7 +120,7 @@ export const deleteBooksFailure = (error) => {
     }
 }
 
-export const deleteBooks = () => {
+export const deleteBook = (id) => {
     return dispatch => {
         dispatch(deleteBooksLoading())
         jsonApi(`books/`, "DELETE", id)
