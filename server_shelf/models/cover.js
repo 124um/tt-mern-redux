@@ -5,4 +5,4 @@ const CoverSchema = new Schema({
   name: { type: Number, default: '' }
 });
 
-mongoose.model('Cover', CoverSchema);
+module.exports = mongoose.model('Cover', CoverSchema);

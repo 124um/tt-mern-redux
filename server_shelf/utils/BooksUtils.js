@@ -1,7 +1,6 @@
-let mongoose = require('mongoose');
+let mongoose = require('mongodb');
 
-// let connect = require('../connect');
-// let pool = connect.connect_db('db Dictionaries Utils run');
+const connect = require("../connect")
 
 const booksTestData = require( '../data/books.json')
 const coversTestData = require( '../data/covers.json')
@@ -9,8 +8,12 @@ const coversTestData = require( '../data/covers.json')
 const Book = require("../models/book")
 const Cover = require("../models/cover")
 
+
+
 exports.getBooksData = async () => {
-    // return Book.all();
+    // const books = connect.Book.find()
+    // return books
+    // console.log("exports.getBooksData= ~ books---------------------------->", books)
     return booksTestData;
 };
 
@@ -36,7 +39,7 @@ exports.deleteBookData = async (bookId) => {
 };
 
 exports.getCoversData = async () => { 
-    // return Cover.all()
+    // return Cover.find()
     return coversTestData
 };
 
@@ -58,4 +61,4 @@ exports.patchCoverData = async (newData) => {
 
 exports.deleteCoverData = async (coverId) => {
     return Cover.remove({ id : coverId })
-};
+};  

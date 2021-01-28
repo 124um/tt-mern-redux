@@ -1,22 +1,18 @@
-const { config } = require('./config/config');
+const { DBCONNECT } = require('./config/config');
+const mongoose = require('mongoose')
 
-exports.connect_db = function (req) {
+const connectDb = () => { 
+    mongoose.Promise = bluebird
+    const options = {
+        useMongoClient: true,
+        useNewUrlParser: true, 
+        useUnifiedTopology: true
+      }
 
-    var mongoose = require('mongoose');
+    mongoose.connect(DBCONNECT, options)
+    console.log("connect! ", DBCONNECT)
     
-    const connectionString = config;
+    return mongoose.connection
+};
 
-    mongoose.connect(connectionString);
-    mongoose.Promise = global.Promise;
-    var db = mongoose.connection;
-
-
-    db.on(function (err) {
-        if (!err) {
-            console.log(req +  " ==> Database is connected ... nn");
-        } else {
-            console.log(req +  " ==> Error connecting database ... nn");
-        }
-    });
-    return db;
-}; 
+module.exports = require('./connect.js');

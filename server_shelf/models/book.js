@@ -7,4 +7,4 @@ const BookSchema = new Schema({
   coverId: { type: Schema.Types.ObjectId, ref:'Cover'}
 });
 
-mongoose.model('Book', BookSchema);
+module.exports = mongoose.model('Book', BookSchema);
