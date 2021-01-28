@@ -14,10 +14,10 @@ services:
     restart: always
     stdin_open: true
     build:
-        context: ./client
+        context: ./front_bookshelf
         dockerfile: ./Dockerfile
     volumes: 
-        - ./client:/usr/src/client
+        - ./front_bookshelf:/usr/src/client
         - /usr/src/client/node_modules
     depends_on: 
         - api      
@@ -39,7 +39,7 @@ services:
     container_name: api
     restart: always
     build:
-        context: ./hell_back
+        context: ./server_self
         dockerfile: ./Dockerfile
     ports:
         - 8000:8000

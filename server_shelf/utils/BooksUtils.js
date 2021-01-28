@@ -1,6 +1,6 @@
-let mongoose = require('mongodb');
+const mongoose = require('mongoose');
 
-const connect = require("../connect")
+// const connect = require("../connect")
 
 const booksTestData = require( '../data/books.json')
 const coversTestData = require( '../data/covers.json')
@@ -9,12 +9,17 @@ const Book = require("../models/book")
 const Cover = require("../models/cover")
 
 
+mongoose.connect("mongodb://librarian:libpassword@localhost:27017/Books?authSource=admin", { useUnifiedTopology: true, useNewUrlParser: true, useFindAndModify: false }, function(err){
+        if(err) return console.log(err);
+});
+
+
 
 exports.getBooksData = async () => {
-    // const books = connect.Book.find()
+    const books = Book.find({id:1})
     // return books
-    // console.log("exports.getBooksData= ~ books---------------------------->", books)
-    return booksTestData;
+    console.log("exports.getBooksData= ~ books---------------------------->", books)
+    return books;
 };
 
 exports.getBookData = async ( bookId ) => {
