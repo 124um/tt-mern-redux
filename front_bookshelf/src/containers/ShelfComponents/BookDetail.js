@@ -1,10 +1,10 @@
   
 import React from 'react'
 import { ListGroup, ListGroupItem, Badge  } from 'reactstrap'
+import config from "../../config/dev.env.json"
+const { STATIC_IMAGES_URL } = config
 
-const STATIC_IMAGES_URL = "http://localhost:8000/static/images/"
 class BookDetail extends React.Component {
-    
     render(){
         const { bookInfo , cover } = this.props
         

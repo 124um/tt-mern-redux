@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 import { Badge, Row, Button } from 'reactstrap';
 import BooksList from "./ShelfComponents/BooksList"
 import BookDetail from "./ShelfComponents/BookDetail"
-import { fetchBooks, fetchCovers } from "../actions/actions";
+import { fetchBooks, postBook, patchBook, deleteBook, fetchCovers } from "../actions/actions";
 import Alert from "../components/Alerts"
 import ModalOperations from "../components/ModalOperations"
 
@@ -41,22 +41,44 @@ class BookShelfContainer extends React.Component {
     }
 
     postNewBook = (newInfo) => {
-    console.log("BookShelfContainer ~ newInfo", newInfo)
-        // this.workWithAlert(
-        //     true,
-        //     "Book added to the shelf!",
-        //     "success"
-        // )
+        const req = {
+            title: newInfo.title,
+            description : newInfo.description,
+            // coverId : newInfo.coverId
+        }      
+        this.props.postBook(req)
+        this.workWithAlert(
+            true,
+            "Book added to the shelf - success!",
+            "success"
+        )
+        this.setState({ modalOperationsVisible: false })
     }
 
-    pathBook = (newInfo) => {
-    console.log("BookShelfContainer ~ newInfo", newInfo)
-
+    patchBook = (newInfo) => {
+        const req = {
+            id: this.state.currentBook.id,
+            title: newInfo.title == undefined ? this.state.currentBook.title : newInfo.title,
+            description : newInfo.description == undefined ? this.state.currentBook.description : newInfo.description,
+            // coverId : newInfo.coverId == undefined ? this.state.currentBook.coverId : newInfo.coverId
+        }
+        this.props.patchBook(req) 
+        this.workWithAlert(
+            true,
+            "Book edited to the shelf - success!",
+            "success"
+        )
+        this.setState({ modalOperationsVisible: false })
     }
     
-    deleteBook = (id) => {
-    console.log("BookShelfContainer ~ deleteBook ~ id", id)
-
+    deleteBook = () => {
+        this.props.deleteBook(this.state.currentBook.id)
+        this.workWithAlert(
+            true,
+            "Book deleted to the shelf - success!",
+            "success"
+        )
+        this.setState({ modalOperationsVisible: false })
     }
 
     handleClick = async (currentBookId) => {
@@ -78,9 +100,9 @@ class BookShelfContainer extends React.Component {
         switch(type) {
             case "new": this.postNewBook(newInfo)
                 break   
-            case "edit": this.pathBook(newInfo)
+            case "edit": this.patchBook(newInfo)
                 break  
-            case "remove": this.deleteBook(newInfo)
+            case "remove": this.deleteBook()
                 break  
         }
     }
@@ -140,6 +162,9 @@ const mapStateToProps = (state, props) => {
 const mapDispatchToProps = dispatch => {
     return {
         fetchBooks: () => dispatch(fetchBooks()),
+        postBook: (data) => dispatch(postBook(data)),
+        patchBook: (data) => dispatch(patchBook(data)),
+        deleteBook: (id) => dispatch(deleteBook(id)),
         fetchCovers: () => dispatch(fetchCovers())
     }
 }

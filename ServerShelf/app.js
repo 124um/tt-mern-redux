@@ -4,10 +4,10 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
 var booksRouter = require('./routes/BooksRouter');
-const cors = require('cors')
+
+const cors = require('cors'),
+      router = express.Router()
 
 var app = express();
 
@@ -25,11 +25,20 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/static', express.static('public'));
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
+app.use('/api', router);
+
+
 app.use('/books', booksRouter.getBooks);
 app.use('/books/:id', booksRouter.getBook);
 app.use('/covers', booksRouter.getCovers);
+
+router.use((req, res, next) => {
+    return next()
+}) 
+
+router.get('/books', booksRouter.getBooks);
+router.get('/books/:id', booksRouter.getBook);
+router.get('/covers', booksRouter.getCovers);
 
 
 // catch 404 and forward to error handler

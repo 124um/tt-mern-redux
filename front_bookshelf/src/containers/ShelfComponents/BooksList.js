@@ -1,6 +1,7 @@
 import React from 'react';
 import { ListGroupItem , ListGroup, Col, Row } from 'reactstrap';
-const STATIC_IMAGES_URL = "http://localhost:8000/static/images/"
+import config from "../../config/dev.env.json"
+const { STATIC_IMAGES_URL } = config
 
 const BooksList = ({ bookListData, coversData, onSelect }) => {
 
