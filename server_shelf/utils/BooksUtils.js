@@ -19,8 +19,7 @@ exports.getBooksData = async () => {
 };
 
 exports.getBookData = async ( bookId ) => {
-    // return Book.findById( bookId );
-    return booksTestData.find( book => book.id == bookId );
+    return Book.findById( bookId );
 };
 
 exports.postBookData = async (newData) => {
@@ -34,12 +33,11 @@ exports.patchBookData = async (newData) => {
 };
 
 exports.deleteBookData = async (bookId) => {
-    return Book.remove({ id : bookId })
+    return Book.deleteOne({ id : bookId })
 };
 
 exports.getCoversData = async () => { 
-    // return Cover.find()
-    return coversTestData
+    return Cover.find({})
 };
 
 exports.getCoverData = async (coverId) => {
@@ -57,5 +55,5 @@ exports.patchCoverData = async (newData) => {
 }; 
 
 exports.deleteCoverData = async (coverId) => {
-    return Cover.remove({ id : coverId })
+    return Cover.deleteOne({ id : coverId })
 };  

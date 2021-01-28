@@ -49,7 +49,7 @@ class BookShelfContainer extends React.Component {
         const req = {
             title: newInfo.title,
             description : newInfo.description,
-            // coverId : newInfo.coverId
+            coverId : 1  // Strubbs
         }      
         this.props.postBook(req)
         this.workWithAlert(
@@ -65,7 +65,7 @@ class BookShelfContainer extends React.Component {
             id: this.state.currentBook.id,
             title: newInfo.title == undefined ? this.state.currentBook.title : newInfo.title,
             description : newInfo.description == undefined ? this.state.currentBook.description : newInfo.description,
-            // coverId : newInfo.coverId == undefined ? this.state.currentBook.coverId : newInfo.coverId
+            coverId : newInfo.coverId == undefined ? this.state.currentBook.coverId : newInfo.coverId
         }
         this.props.patchBook(req) 
         this.workWithAlert(

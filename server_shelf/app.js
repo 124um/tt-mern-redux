@@ -35,8 +35,15 @@ router.use((req, res, next) => {
 
 router.get('/books', booksRouter.getBooks);
 router.get('/books/:id', booksRouter.getBook);
-router.get('/covers', booksRouter.getCovers);
+router.post('/books', booksRouter.postBook)
+router.patch('/books', booksRouter.patchBook)
+router.delete('/books', booksRouter.deleteBook)
 
+router.get('/covers', booksRouter.getCovers);
+router.get('/covers/:id', booksRouter.getCover);
+router.post('/covers', booksRouter.postCover);
+router.patch('/covers', booksRouter.patchCover);
+router.delete('/covers', booksRouter.deleteCovers);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

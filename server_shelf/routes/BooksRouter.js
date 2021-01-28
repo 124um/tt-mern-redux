@@ -62,7 +62,9 @@ exports.patchBook = async (req, res) => {
 
 exports.deleteBook = async (req, res) => {
     try {
-        const results = await deleteBookData(req.body.id);
+        
+        console.log("exports.deleteBook ~ req-----------------", req.body)
+        const results = await deleteBookData(req.body);
         res.send({
             "code": 200, "success": "success  deleteBookData", results
         });
