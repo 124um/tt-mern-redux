@@ -35,7 +35,7 @@ exports.deleteBookData = async (bookId) => {
     return Book.remove({ id : bookId })
 };
 
-exports.getCoversData = async () => {
+exports.getCoversData = async () => { 
     // return Cover.all()
     return coversTestData
 };
